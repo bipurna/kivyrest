@@ -1,0 +1,289 @@
+#: import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import Factory kivy.factory.Factory
+<Editor>:
+    id:contact
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint:1,None
+            orientation: 'horizontal'
+            size_hint_y:.1
+            Label:
+                font_size:"30sp"
+                id: title
+                text:""
+        GridLayout:
+            size_hint:1,None
+            size_hint_y:.7
+            padding:0,0,50,50
+            cols:2
+            spacing:10
+            BoxLayout:
+                size_hint:None,1
+                size_hint_x:.3
+                orientation: 'vertical'
+                spacing:20                
+                Label:
+                    text: "Name"
+                    size_hint_y:None
+                    height:50
+                Label:
+                    text: "Address"
+                    size_hint_y:None
+                    height:50
+                Label:
+                    text: "Email"
+                    size_hint_y:None
+                    height:50
+                Label:
+                    text: "Phone"
+                    size_hint_y:None
+                    height:50
+                
+            BoxLayout:
+                id:inputs
+                size_hint:None,1
+                size_hint_x:.7
+                orientation: 'vertical'
+                spacing:20
+                TextInput:
+                    id:name
+                    background_color: (.3,.3,.3,1) if self.focus else (.3,.3,.3,.9)
+                    size_hint_y:None
+                    height:50
+                    font_size:"30sp"
+                    font_color:1,1,1,1
+                TextInput:
+                    id:address
+                    background_color: (.3,.3,.3,1) if self.focus else (.3,.3,.3,.9)
+                    size_hint_y:None
+                    height:50
+                    font_size:"30sp"
+                TextInput:
+                    id:email
+                    font_size:"30sp"
+                    background_color: (.3,.3,.3,1) if self.focus else (.3,.3,.3,.9)
+                    size_hint_y:None
+                    height:50
+                TextInput:
+                    id:phone
+                    font_size:"30sp"
+                    background_color: (.3,.3,.3,1) if self.focus else (.3,.3,.3,.9)
+                    size_hint_y:None
+                    height:50
+        Label:
+            size_hint:1,None
+            size_hint_y:.1
+
+        BoxLayout:
+            size_hint_y:None
+            height:50
+            Button:
+                id:save
+                text:"update"
+                disabled: True if name.text == '' or address.text == '' or email.text == '' or phone.text == '' else False
+                on_press:root.update_entry()
+                on_release:
+                    root.manager.current="displayer"
+                    root.manager.transition.direction="left"
+            Button:
+                id:back
+                markup:True
+                text:"[b]Back[/b]"
+                size_hint:None,1
+                size_hint_x:.1
+                on_release:
+                    root.manager.current="displayer"
+                    root.manager.transition.direction="right"
+
+
+<ContactForm>:
+    id:contact
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint:1,None
+            orientation: 'horizontal'
+            size_hint_y:.2
+            Label:
+                font_size:"30sp"
+                text:"Create New Contact"
+
+        GridLayout:
+            size_hint:1,None
+            size_hint_y:.7
+            padding:0,0,50,50
+            cols:2
+            spacing:10
+            BoxLayout:
+                size_hint:None,1
+                size_hint_x:.3
+                orientation: 'vertical'
+                spacing:20                
+                Label:
+                    text: "Name"
+                    size_hint_y:None
+                    height:50
+                Label:
+                    text: "Address"
+                    size_hint_y:None
+                    height:50
+                Label:
+                    text: "Email"
+                    size_hint_y:None
+                    height:50
+                Label:
+                    text: "Phone"
+                    size_hint_y:None
+                    height:50
+                Label:
+                    size_hint_y:None
+                    height:50
+            BoxLayout:
+                id:inputs
+                size_hint:None,1
+                size_hint_x:.7
+                orientation: 'vertical'
+                spacing:20
+                TextInput:
+                    id:name
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.705}
+                    background_color: (.3,.3,.3,1) if self.focus else (.3,.3,.3,.9)
+                    size_hint_y:None
+                    height:50
+                    font_size:"30sp"
+                    font_color:1,1,1,1
+                TextInput:
+                    id:address
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.705}
+                    background_color: (.3,.3,.3,1) if self.focus else (.3,.3,.3,.9)
+                    size_hint_y:None
+                    height:50
+                    font_size:"30sp"
+                TextInput:
+                    id:email
+                    font_size:"30sp"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.705}
+                    background_color: (.3,.3,.3,1) if self.focus else (.3,.3,.3,.9)
+                    size_hint_y:None
+                    height:50
+                TextInput:
+                    id:phone
+                    font_size:"30sp"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    background_color: (.3,.3,.3,1) if self.focus else (.3,.3,.3,.9)
+                    size_hint_y:None
+                    height:50
+                BoxLayout:
+                    size_hint_y:None
+                    height:50
+                    Button:
+                        id:save
+                        text:"SAVE"
+                        disabled: True if name.text == '' or address.text == '' or email.text == '' or phone.text == '' else False
+                        on_press: root.insert_data()
+                        on_release: root.clear_inputs()
+                    Button:
+                        id: display
+                        text:"Display"
+                        on_press:root.db_display()
+                        on_release:
+                            root.manager.current="displayer"
+                            root.manager.transition.direction="left"
+                        
+
+<ContactDisplayer>:
+    
+    layout: layout
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size       
+        
+    BoxLayout:
+        padding:40
+        spacing:20
+        orientation: 'vertical'
+        Label:
+
+            size_hint:1,None
+            height:.2 
+            text:"Contact List"
+            font_size:"30sp"
+        
+        BoxLayout:
+            spacing:20
+            size_hint:1,None
+            size_hint_y:.1
+            orientation: 'vertical'
+            GridLayout:
+                cols:6
+                Label:
+                    text:"Edit"
+                Label:
+                    text:"ID"
+                Label:
+                    text:"Name"
+                Label:
+                    text:"Address"
+                Label:
+                    text:"Email"
+                Label:
+                    text:"Phone" 
+                       
+        ScrollView:
+            layout:layout                      
+            do_scroll_x:False
+            do_scroll_y:True        
+            GridLayout:
+                size_hint_y: None
+                height: self.height
+                # row_force_default:True
+                padding:20
+                spacing:10
+                cols:6
+                id:layout
+    BoxLayout:
+        size_hint: 1,None
+        size_hint_y:.1 
+        Button:
+            id:back
+            markup:True
+            text:"[b]Back[/b]"
+            size_hint:None,1
+            size_hint_x:.2
+            on_release:
+                root.manager.current="contactForm"
+                root.manager.transition.direction="right"
+
+        Button:
+            id:edit
+            text:"Edit"
+            background_color:(0,.8,0,1)
+            disabled:True
+            on_press:root.edit_item()
+            on_release:
+                root.manager.current="editor"
+                root.manager.transition.direction="left"
+
+        Button:
+            id:delete
+            text:"Delete"
+            background_color:(.8,0,0,1)
+            disabled:True
+            on_press:root.delete_item()
+
